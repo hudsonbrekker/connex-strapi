@@ -32,8 +32,8 @@ A modern, scalable web application utilizing **Strapi** as a headless CMS and **
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v14.x or higher)
-- [Yarn](https://yarnpkg.com/) or npm
+- [Node.js](https://nodejs.org/) (v18.x or higher)
+- [Yarn](https://yarnpkg.com/) or pnpm
 - [Docker](https://www.docker.com/) (optional, for containerized environments)
 
 ---
