@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_service_contents",
+  "info": {
+    "displayName": "Service Content"
+  },
+  "options": {},
+  "attributes": {
+    "header": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "customField",
+      "options": {
+        "preset": "defaultHtml"
+      },
+      "required": true,
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}

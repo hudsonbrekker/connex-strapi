@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.connex.glohow.com
+
+# Sitemaps
+Sitemap: https://www.connex.glohow.com/sitemap.xml

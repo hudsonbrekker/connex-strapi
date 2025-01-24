@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_shared_highlight_cards",
+  "info": {
+    "displayName": "Highlight Card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "projectName": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "category": {
+      "type": "customField",
+      "default": "[]",
+      "options": [
+        "MO-Game Sage",
+        "CM",
+        "CS",
+        "MO",
+        "LC"
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    }
+  }
+}
