@@ -107,11 +107,13 @@ export interface SharedServiceContent extends Struct.ComponentSchema {
 export interface SharedServiceGroup extends Struct.ComponentSchema {
   collectionName: 'components_shared_service_groups';
   info: {
+    description: '';
     displayName: 'Service Group';
     icon: 'server';
   };
   attributes: {
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    mobileImage: Schema.Attribute.Media<'images'>;
     serviceContent: Schema.Attribute.Component<'shared.service-content', true> &
       Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;

@@ -1,20 +1,23 @@
 "use client"
 
-import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import DOMPurify from "isomorphic-dompurify"
+import MarqueeSlider from "@/components/MarqueeSlider"
 import { cn } from "@/lib/utils"
+import { heroOptions } from "@/queries"
 import { CMS_URL } from "@/types/constants"
 import { useGSAP } from "@gsap/react"
-import gsap from "gsap"
-import { heroOptions } from "@/queries"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import MarqueeSlider from "@/components/MarqueeSlider"
+import gsap from "gsap"
+import DOMPurify from "isomorphic-dompurify"
+import { useLocale } from "next-intl"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
 
 const MainBannerSection = () => {
+	const locale = useLocale()
+
 	const sectionRef = useRef<HTMLDivElement | null>(null)
 	const { data, isFetching } = useSuspenseQuery({
-		...heroOptions(),
+		...heroOptions({ locale }),
 		select: (data) => {
 			return data.hero
 		},
@@ -22,7 +25,7 @@ const MainBannerSection = () => {
 
 	const [htmlContent, setHtmlContent] = useState<string>("")
 
-	useGSAP(
+	const { contextSafe } = useGSAP(
 		() => {
 			const tl = gsap.timeline({
 				scrollTrigger: { trigger: sectionRef.current, once: true },
@@ -69,6 +72,10 @@ const MainBannerSection = () => {
 		{ scope: sectionRef },
 	)
 
+	const onScrollTo = contextSafe((idString: string, duration: number) => {
+		gsap.to(window, { duration, scrollTo: idString })
+	})
+
 	useEffect(() => {
 		if (!isFetching && data) {
 			setHtmlContent(data.description)
@@ -80,24 +87,30 @@ const MainBannerSection = () => {
 			ref={sectionRef}
 			id='main_banner'
 			className={cn(
-				"flex w-full flex-col items-center justify-center gap-8 py-8 text-primary md:gap-12 lg:py-12",
+				"flex w-full flex-col items-center justify-center gap-8 overflow-hidden bg-[#FCFCFC] py-8 text-primary md:gap-12 lg:py-12",
 			)}
 		>
-			<div className='grid w-full max-w-[1440px] grid-cols-1 gap-8 px-4 md:grid-cols-2 2xl:px-0'>
+			<div className='grid w-full max-w-[1440px] grid-cols-1 gap-8 px-4 md:grid-cols-2 md:gap-12 2xl:px-0'>
 				{!isFetching && data && (
 					<div className='left-content flex flex-col items-start justify-center gap-4 md:gap-8'>
 						<h1 className='text-black text-2xl font-bold leading-[145%] lg:text-5xl'>
 							{data.title}
 						</h1>
 						<p
-							className='font-ibm text-black-secondary text-lg lg:text-xl'
+							className='text-black-secondary font-ibm text-lg lg:text-xl'
 							dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlContent) }}
 						></p>
 						<div className='flex w-full justify-center gap-4 md:justify-start'>
-							<button className='text-accent btn btn-secondary h-10 min-h-0 flex-1 px-4 py-2 md:flex-none'>
+							<button
+								className='text-accent btn btn-secondary h-10 min-h-0 flex-1 px-4 py-2 md:flex-none'
+								onClick={() => onScrollTo("#our_services", 2)}
+							>
 								Our service
 							</button>
-							<button className='btn btn-primary h-10 min-h-0 flex-1 px-4 py-2 text-base-100 md:flex-none'>
+							<button
+								className='btn btn-primary h-10 min-h-0 flex-1 px-4 py-2 text-base-100 md:flex-none'
+								onClick={() => onScrollTo("#contact_us", 1)}
+							>
 								Contact us
 							</button>
 						</div>

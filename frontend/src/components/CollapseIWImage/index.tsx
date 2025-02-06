@@ -4,36 +4,34 @@ import { ComponentSharedWithImage } from "@/types"
 import { CMS_URL } from "@/types/constants"
 import DOMPurify from "isomorphic-dompurify"
 import Image from "next/image"
-import { useState } from "react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
 
 type CollapseWithImageProps = {
 	item: ComponentSharedWithImage<ComponentSharedServiceGroup>
-	itemIndex: number
 	direction: "left" | "right"
 }
 
 const CollapseWithImage = ({
 	item: { title, serviceContent, image },
-	itemIndex,
 	direction = "left",
 }: CollapseWithImageProps) => {
-	const [currentIndex, setCurrentIndex] = useState<number>(-1)
+	// const [currentIndex, setCurrentIndex] = useState<number>(-1)
 
-	const handleOnChange = (index: number) => {
-		setCurrentIndex(index === currentIndex ? -1 : index)
-	}
+	// const handleOnChange = (index: number) => {
+	// 	setCurrentIndex(index === currentIndex ? -1 : index)
+	// }
 
 	return (
 		<div
 			className={cn(
-				"flex w-full max-w-[1440px] items-start gap-6",
+				"flex items-start gap-6",
 				direction === "left" ? "flex-col lg:flex-row" : "flex-col lg:flex-row-reverse",
 			)}
 		>
 			<p className='text-black block font-ibm text-2xl font-semibold leading-[150%] lg:hidden'>
 				{title}
 			</p>
-			<div className='basic-1/2 relative h-[225px] w-full lg:h-[450px]'>
+			<div className='relative h-[225px] w-full lg:h-[450px]'>
 				<Image
 					src={CMS_URL + image.url}
 					alt={image.name}
@@ -42,9 +40,9 @@ const CollapseWithImage = ({
 				/>
 			</div>
 
-			<div className='basic-1/2 flex w-full flex-col gap-4 font-ibm lg:gap-8'>
+			<div className='flex w-full flex-col gap-4 font-ibm lg:gap-8'>
 				<p className='text-black hidden text-2xl font-semibold leading-[150%] lg:block'>{title}</p>
-				{serviceContent.map((item, index) => (
+				{/* {serviceContent.map((item, index) => (
 					<div
 						className='collapse collapse-plus cursor-pointer rounded-2xl border border-[#CACACA]'
 						key={index}
@@ -65,7 +63,29 @@ const CollapseWithImage = ({
 							dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item?.content ?? "") }}
 						/>
 					</div>
-				))}
+				))} */}
+				<Accordion
+					type='single'
+					collapsible
+					className='flex w-full flex-col gap-4 font-ibm lg:gap-8'
+				>
+					{serviceContent.map((item, index) => (
+						<AccordionItem
+							value={`item-${index}`}
+							key={index}
+						>
+							<AccordionTrigger className='text-black text-start text-lg lg:text-xl'>
+								{item?.header}
+							</AccordionTrigger>
+							<AccordionContent className='text-black'>
+								<div
+									className='relative [&>li]:leading-[150%] [&>ul]:list-disc [&>ul]:px-5'
+									dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item?.content ?? "") }}
+								/>
+							</AccordionContent>
+						</AccordionItem>
+					))}
+				</Accordion>
 			</div>
 		</div>
 	)

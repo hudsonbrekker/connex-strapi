@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  strapi_cms:
+    container_name: strapi_cms
+    build: .
+    image: strapi_cms:latest
+    restart: always
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: strapi_mysql
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PORT: ${DATABASE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      NODE_ENV: ${NODE_ENV}
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./pnpm-lock.yaml:/opt/pnpm-lock.yaml
+
+      - ./.env:/opt/app/.env
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - '1337:1337'
+    networks:
+      - strapi_cms
+    depends_on:
+      - strapi_mysql
+      
+  strapi_mysql:
+    container_name: strapi_mysql
+    restart: always
+    env_file: .env
+    image: mysql:latest
+    command: 'mysqld --innodb-flush-method=fsync --innodb-use-native-aio=0'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - strapi_mysql-data:/var/lib/mysql
+      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+    ports:
+      - '3306:3306'
+    networks:
+      - strapi_cms
+
+volumes:
+  strapi_mysql-data:
+
+networks:
+  strapi_cms:
+    name: connex
+    driver: bridge

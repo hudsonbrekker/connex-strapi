@@ -1,8 +1,8 @@
 import { gql } from "@/__generated__"
 
 export const getGlobalSeo = gql(`
-  query Global {
-    global {
+  query Global($locale: I18NLocaleCode, $status: PublicationStatus) {
+    global(locale: $locale, status: $status) {
       defaultSeo {
         id
         metaTitle
@@ -30,8 +30,8 @@ export const getGlobalLogo = gql(`
 `)
 
 export const getHero = gql(`
-	query Hero {
-		hero {
+	query Hero($locale: I18NLocaleCode, $status: PublicationStatus) {
+		hero(locale: $locale, status: $status) {
       documentId
       description
       title
@@ -55,8 +55,8 @@ export const getHero = gql(`
 `)
 
 export const getKeySolutions = gql(`
-  query KeySolution {
-    keySolution {
+  query KeySolution($locale: I18NLocaleCode, $status: PublicationStatus) {
+    keySolution(locale: $locale, status: $status) {
       documentId
       createdAt
       locale
@@ -122,6 +122,20 @@ export const getProjects = gql(`
         }
         category
       }
+    }
+  }
+`)
+
+export const createContact = gql(`
+  mutation CreateContact($data: ContactInput!) {
+    createContact(data: $data) {
+      company
+      createdAt
+      email
+      message
+      name
+      service
+      documentId
     }
   }
 `)

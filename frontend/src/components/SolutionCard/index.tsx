@@ -63,7 +63,7 @@ const SolutionCard = ({ item }: SolutionCardProps) => {
 
 	return (
 		<div
-			className='font-ibm relative flex w-full flex-col gap-3 overflow-hidden rounded-2xl bg-[#050505] p-6 text-white shadow-md lg:w-[412px]'
+			className='relative flex w-full flex-col gap-3 overflow-hidden rounded-2xl bg-[#050505] p-6 font-ibm text-white shadow-md lg:w-[412px]'
 			onMouseEnter={handleMouseIn}
 			onMouseLeave={handleMouseOut}
 		>
@@ -82,6 +82,7 @@ const SolutionCard = ({ item }: SolutionCardProps) => {
 						alt={item.image.name}
 						fill
 						draggable='false'
+						unoptimized
 						className='rounded-xl object-contain'
 					/>
 				</div>

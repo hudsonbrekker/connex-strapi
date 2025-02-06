@@ -2,7 +2,8 @@
   "collectionName": "components_shared_service_groups",
   "info": {
     "displayName": "Service Group",
-    "icon": "server"
+    "icon": "server",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -11,12 +12,12 @@
       "required": true
     },
     "image": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "serviceContent": {
       "displayName": "Service Content",
@@ -24,6 +25,13 @@
       "repeatable": true,
       "component": "shared.service-content",
       "required": true
+    },
+    "mobileImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

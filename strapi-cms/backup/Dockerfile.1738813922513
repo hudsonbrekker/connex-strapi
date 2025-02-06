@@ -1,0 +1,23 @@
+# Use an official Node.js image as base
+FROM node:20
+
+# Install pnpm globally
+RUN corepack enable && corepack prepare pnpm@9.15.1 --activate
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json first
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies using pnpm
+RUN pnpm install --frozen-lockfile
+
+# Copy the Strapi application
+COPY . .
+
+# Expose the Strapi port
+EXPOSE 1337
+
+# Start Strapi
+CMD ["pnpm", "develop"]

@@ -17,6 +17,7 @@ type MarqueeSliderProps = {
 	speed?: number
 	paddingRight?: number
 	aspect?: number
+	spacing?: number
 } & HTMLAttributes<HTMLDivElement>
 
 const MarqueeSlider = ({
@@ -25,6 +26,7 @@ const MarqueeSlider = ({
 	speed = 0.3,
 	paddingRight = 32,
 	aspect = 225 / 145,
+	spacing = paddingRight,
 	...props
 }: MarqueeSliderProps) => {
 	const marqueeRef = useRef<HTMLDivElement | null>(null)
@@ -32,7 +34,7 @@ const MarqueeSlider = ({
 
 	useGSAP(
 		() => {
-			if (marqueeRef.current && boxesRef.current.length > 0) { 
+			if (marqueeRef.current && boxesRef.current.length > 0) {
 				// const marquee = marqueeRef.current
 				// const boxes = boxesRef.current
 				// Calculate the total width of all items
@@ -48,7 +50,7 @@ const MarqueeSlider = ({
 
 				// const totalWidth = items.reduce((acc, item) => acc + item.offsetWidth, 0)
 
-				// // Determine the scroll direction 
+				// // Determine the scroll direction
 				// const scrollDistance = direction === "left" ? totalWidth : -totalWidth
 
 				// gsap.to(marquee, {
@@ -72,7 +74,8 @@ const MarqueeSlider = ({
 	return (
 		<div
 			ref={marqueeRef}
-			className='inline-flex w-full items-center gap-8'
+			className='inline-flex w-full items-center'
+			style={{ gap: `${spacing}px` }}
 		>
 			{items.map((item, index) => (
 				<div
