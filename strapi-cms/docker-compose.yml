@@ -1,11 +1,11 @@
-version: '3.8'
+version: '3'
 
 services:
   strapi_cms:
     container_name: strapi_cms
     build: .
     image: strapi_cms:latest
-    restart: always
+    restart: unless-stopped
     env_file: .env
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
@@ -34,7 +34,8 @@ services:
       
   strapi_mysql:
     container_name: strapi_mysql
-    restart: always
+    restart: unless-stopped
+    platform: linux/amd64 #for platform error on Apple M1 chips
     env_file: .env
     image: mysql:latest
     command: 'mysqld --innodb-flush-method=fsync --innodb-use-native-aio=0'

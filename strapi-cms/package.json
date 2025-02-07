@@ -14,24 +14,24 @@
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^5.0.1",
     "@strapi/plugin-cloud": "5.8.0",
-    "@strapi/plugin-graphql": "^5.8.0",
-    "@strapi/plugin-seo": "^2.0.4",
+    "@strapi/plugin-graphql": "^5.9.0",
+    "@strapi/plugin-seo": "^2.0.5",
     "@strapi/plugin-users-permissions": "5.8.0",
     "@strapi/strapi": "5.8.0",
-    "fs-extra": "^10.0.0",
-    "mime-types": "^2.1.27",
+    "fs-extra": "^10.1.0",
+    "mime-types": "^2.1.35",
     "mysql2": "3.9.8",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.29.0",
     "strapi-plugin-multi-select": "^2.1.1",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.1.15"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5"
+    "@types/node": "^20.17.17",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "typescript": "^5.7.3"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
