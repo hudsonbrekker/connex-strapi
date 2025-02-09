@@ -20,6 +20,7 @@
     "@strapi/strapi": "5.9.0",
     "fs-extra": "^10.1.0",
     "mime-types": "^2.1.35",
+    "mysql": "^2.18.1",
     "mysql2": "3.9.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -28,6 +29,7 @@
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
+    "@types/mysql": "^2",
     "@types/node": "^20.17.17",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
@@ -39,6 +41,5 @@
   },
   "strapi": {
     "uuid": "f8255a41-25fc-44a0-bd3e-5f974367cc17"
-  },
-  "packageManager": "yarn@4.6.0"
+  }
 }

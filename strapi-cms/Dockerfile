@@ -1,36 +1,18 @@
-# Use node 20 as base
-FROM node:20
-
-# Set environment variable (default to development)
+FROM node:20-alpine3.20
+# Installing libvips-dev for sharp Compatibility
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
-# Set working directory
-WORKDIR /opt/app
-
-# Copy package.json and lock file first (to cache dependencies)
+WORKDIR /opt/
 COPY package.json yarn.lock ./
+RUN yarn config set network-timeout 600000 -g && yarn install
 
-# Install dependencies using Yarn
-RUN yarn install --frozen-lockfile
-
-# Copy the rest of the application code
+WORKDIR /opt/app
 COPY . .
-
-# Ensure correct file permissions
+ENV PATH /opt/node_modules/.bin:$PATH
 RUN chown -R node:node /opt/app
-
-# Switch to the node user
 USER node
-
-# Build Strapi
-RUN yarn build
-
-# Set the correct path for node modules
-ENV PATH="/opt/app/node_modules/.bin:$PATH"
-
-# Expose Strapi port
+RUN ["yarn", "build"]
 EXPOSE 1337
-
-# Start Strapi in development mode
 CMD ["yarn", "develop"]

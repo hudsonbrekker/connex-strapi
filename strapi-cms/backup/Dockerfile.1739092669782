@@ -1,0 +1,44 @@
+# Use Node 20 as base image
+FROM node:22-alpine3.20
+
+RUN apk add yarn
+
+# Set environment variable (default to development)
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+
+# Set working directory
+WORKDIR /opt/app
+
+# Copy package.json and lock file first (for caching dependencies)
+COPY package.json yarn.lock ./
+
+# Enable Corepack for Yarn
+# RUN npm install -g yarn
+
+# Install dependencies using Yarn
+RUN yarn install
+
+# Ensure node_modules exists before building
+RUN ls -lah /opt/app/node_modules && yarn workspaces focus --all || true
+
+# Copy the rest of the application code
+COPY . .
+
+# Ensure correct file permissions
+RUN chown -R node:node /opt/app
+
+# Switch to the node user
+USER node
+
+# Build Strapi (AFTER dependencies are installed)
+RUN yarn build
+
+# Set the correct path for node modules
+ENV PATH="/opt/app/node_modules/.bin:$PATH"
+
+# Expose Strapi port
+EXPOSE 1337
+
+# Start Strapi in development mode
+CMD ["yarn", "develop"]

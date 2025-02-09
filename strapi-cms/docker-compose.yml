@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   strapi_cms:
     container_name: strapi_cms
@@ -9,7 +8,7 @@ services:
     env_file: .env
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapi_mysql
+      DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PORT: ${DATABASE_PORT}
@@ -22,6 +21,7 @@ services:
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
       - ./yarn.lock:/opt/yarn.lock
+
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
@@ -33,8 +33,8 @@ services:
       
   strapi_mysql:
     container_name: strapi_mysql
+    platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
-    platform: linux/amd64 # For platform error on Apple M1/M2 chips
     env_file: .env
     image: mysql:latest
     command: 'mysqld --innodb-flush-method=fsync --innodb-use-native-aio=0'
@@ -44,15 +44,15 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_ROOT_HOST: '%'
     volumes:
-      - strapi_mysql-data:/var/lib/mysql
-      #- ./data:/var/lib/postgresql/data/ # If you want to use a bind folder
+      - strapi_cms-data:/var/lib/mysql
+      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
     ports:
       - '3306:3306'
     networks:
       - strapi_cms
 
 volumes:
-  strapi_mysql-data:
+  strapi_cms-data:
 
 networks:
   strapi_cms:
