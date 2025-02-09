@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^5.0.1",
-    "@strapi/plugin-cloud": "5.8.0",
+    "@strapi/plugin-cloud": "5.9.0",
     "@strapi/plugin-graphql": "^5.9.0",
-    "@strapi/plugin-seo": "^2.0.5",
-    "@strapi/plugin-users-permissions": "5.8.0",
-    "@strapi/strapi": "5.8.0",
+    "@strapi/plugin-seo": "^2.0.6",
+    "@strapi/plugin-users-permissions": "5.9.0",
+    "@strapi/strapi": "5.9.0",
     "fs-extra": "^10.1.0",
     "mime-types": "^2.1.35",
     "mysql2": "3.9.8",
@@ -40,5 +40,5 @@
   "strapi": {
     "uuid": "f8255a41-25fc-44a0-bd3e-5f974367cc17"
   },
-  "packageManager": "pnpm@9.15.1+sha512.1acb565e6193efbebda772702950469150cf12bcc764262e7587e71d19dc98a423dff9536e57ea44c49bdf790ff694e83c27be5faa23d67e0c033b583be4bfcf"
+  "packageManager": "yarn@4.6.0"
 }

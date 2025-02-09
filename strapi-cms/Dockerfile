@@ -8,14 +8,11 @@ ENV NODE_ENV=${NODE_ENV}
 # Set working directory
 WORKDIR /opt/app
 
-# Install pnpm globally
-RUN npm install -g pnpm@9.15.1
-
 # Copy package.json and lock file first (to cache dependencies)
-COPY package.json pnpm-lock.yaml ./
+COPY package.json yarn.lock ./
 
-# Install dependencies using pnpm
-RUN pnpm install --frozen-lockfile
+# Install dependencies using Yarn
+RUN yarn install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
@@ -27,7 +24,7 @@ RUN chown -R node:node /opt/app
 USER node
 
 # Build Strapi
-RUN pnpm build
+RUN yarn build
 
 # Set the correct path for node modules
 ENV PATH="/opt/app/node_modules/.bin:$PATH"
@@ -36,4 +33,4 @@ ENV PATH="/opt/app/node_modules/.bin:$PATH"
 EXPOSE 1337
 
 # Start Strapi in development mode
-CMD ["pnpm", "develop"]
+CMD ["yarn", "develop"]
