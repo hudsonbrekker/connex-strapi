@@ -52,13 +52,13 @@ cd your-repo-name
 - **Backend Strapi**
 ```bash
 cd your-cms-folder
-pnpm install
+yarn install
 ```
 
 - **Frontend (Next.js)**
 ```bash
 cd your-frontend-folder
-pnpm install
+yarn install
 ```
 
 ### 3. Configure Environment Variables
@@ -87,11 +87,11 @@ NEXT_PUBLIC_API_URL=http://localhost:1337
 
 - **Backend Strapi**
 ```bash
-pnpm develop
+yarn develop
 ```
 
 - **Frontend NextJS**
 ```bash
-pnpm codegen --watch
-pnpm dev
+yarn codegen --watch
+yarn dev
 ```
